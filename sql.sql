@@ -45,5 +45,19 @@ create table rendezVous(
 
 
 
-
+/*verifier !! */
+delimiter //
+create trigger checkEleve
+before insert on eleve
+for each row
+begin
+declare nb int;
+select count(*) into nb from user where email_user=new.email_user
+and passwd_user=new.passwd_user;
+If nb!=0
+then
+INSERT INTO user(email_user,passwd_user) VALUES (new.email_user,new.passwd_user); 
+End if;
+End; //
+delimiter ;
 
