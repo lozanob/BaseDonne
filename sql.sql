@@ -52,12 +52,14 @@ before insert on eleve
 for each row
 begin
 declare nb int;
-select count(*) into nb from user where email_user=new.email_user
-and passwd_user=new.passwd_user;
+select count(*) into nb from user where email_user=new.email_user;
 If nb!=0
 then
+then 
+signal sqlstate'45000'
+set message_text='eleve deja existe';
+else
 INSERT INTO user(email_user,passwd_user) VALUES (new.email_user,new.passwd_user); 
 End if;
 End; //
 delimiter ;
-
